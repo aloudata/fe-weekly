@@ -10,7 +10,7 @@ Hue 是一个开源的  Apache Hadoop UI  系统，由  Cloudera Desktop 
 
 通过使用 Hue，可以在浏览器端的 Web 控制台上与  Hadoop  集群进行交互。
 
-![https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/MNpQlKak371DqDvL/img/8a9276d9-7e6f-40c7-acb0-e7a58eb00c57.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/MNpQlKak371DqDvL/img/8a9276d9-7e6f-40c7-acb0-e7a58eb00c57.png)
+![https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/MNpQlKak371DqDvL/img/8a9276d9-7e6f-40c7-acb0-e7a58eb00c57.png](./imgs/8a9276d9-7e6f-40c7-acb0-e7a58eb00c57.png)
 
 简单来说就是一个集   数据目录、SQL  编辑器、查询结果为一身的一个  web UI 系统
 
