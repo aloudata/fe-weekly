@@ -29,7 +29,7 @@ Hue 的强大之处在于有的断句如图所示的  SELECT FROM  也能提�
 看到  Hue  的自动补全，直觉上觉得跟编译原理相关，我们了解下相关知识
 
 下图是完整的编译流程：
-[编译原理流程图](./imgs/0D4F2A15-D5DC-42F0-98E1-47B9AFD4A046.png)
+![编译原理流程图](./imgs/0D4F2A15-D5DC-42F0-98E1-47B9AFD4A046.png)
 #### 编译器的前端
 
 1. 词法分析器
@@ -42,7 +42,7 @@ Hue 的强大之处在于有的断句如图所示的  SELECT FROM  也能提�
 
 js AST  规范是前端无形中接触最多的
 
-[https://github.com/estree/estree](https://github.com/estree/estree)
+[js AST 地址](https://github.com/estree/estree)
 
 1. 语义分析
 
@@ -60,7 +60,7 @@ Jison  的  API  与  Bison  的相似，因此得名。它支持  Bison 
 
 解析器生成器？听起来是有点拗口，要理解这个名称还是要从 JSON 说起
 
-```
+```javascript
 JSON.parse(`{
 	"Object": {
 		"PI": 3.1415926
@@ -74,7 +74,7 @@ JSON.parse(`{
 
 JSON.parse  函数只能用于解析格式为符合 JSON 规范的字符串，如果字符串格式不是 JSON，或者略有变化，比如在 JSON 中像写程序一样增加注释
 
-```
+```javascript
 JSON.parse(`{
 	// 这是一个注释
 	"Object": {
@@ -87,7 +87,7 @@ JSON.parse(`{
 
 这是因为  JSON.parse  不能识别  “//  这是一个注释”，此时可以用 JSON5
 
-```
+```javascript
 cosnt JSON5 = require('json5');
 JSON5.parse(`{
 	// 这是一个注释
@@ -107,7 +107,7 @@ JSON5.parse(`{
 
 Jison  的词法分析
 
-```
+```javascript
 /* lexical grammar */
 %lex
 %%
@@ -147,7 +147,7 @@ BNF 的形式为<符号> ::= <使用符号的表达式>，这里的  <符号>
 
 10 以内的加减乘除 BNF 表达式：
 
-```
+```javascript
 
 expression::= number + number | number - number | number * number | number / number
 
@@ -157,11 +157,11 @@ number::= 0|1|2|3|4|5|6|7|8|9
 
 前端经常能接触到的是  JSON Schema  的  BNF：
 
-[https://cswr.github.io/JsonSchema/spec/grammar/](https://cswr.github.io/JsonSchema/spec/grammar/)
+[JSON Schema BNF 地址](https://cswr.github.io/JsonSchema/spec/grammar/)
 
 jison 的语法分析
 
-```
+```javascript
 %start expressions
 %% /* language grammar */
 
@@ -202,19 +202,19 @@ npm i jison -g
 
 编译以上  test.jison  文件
 
-```
+```javascript
 jison test.jison
 ```
 
 写入一下要被编译的字符创
 
-```
+```javascript
 echo '你头发多;你头发少'>data
 ```
 
 开始解析
 
-```
+```javascript
 node test.js data
 你技术差
 你技术好
@@ -228,7 +228,7 @@ node test.js data
 
 里面记录了所有词法分析文件和语法分析文件
 
-```
+```javascript
 {
   "lexer": "../generic/sql.jisonlex",
   "autocomplete": [
@@ -352,7 +352,7 @@ node test.js data
 
 找到词法分析文件  sql.jisonlex  也是入口文件
 
-```
+```javascript
 // ...
 '\u2020'                                   { parser.yy.partialCursor = false; parser.yy.cursorFound = yylloc; return 'CURSOR'; }
 '\u2021'                                   { parser.yy.partialCursor = true; parser.yy.cursorFound = yylloc; return 'PARTIAL_CURSOR'; }
@@ -376,7 +376,7 @@ node test.js data
 
 自动补全的语法文件入口为 SqlAutocomplete
 
-```
+```javascript
 SqlAutocomplete
  : SqlStatements EOF
  | SqlStatements_EDIT EOF
@@ -404,7 +404,7 @@ SqlStatements_EDIT
 
 我们的 SQL 语句
 
-```
+```javascript
 SELECT;
 WITH;
 SELECT FROM CURSOR;
@@ -416,7 +416,7 @@ SELECT FROM CURSOR;
 
 我们接下去看语法文件
 
-```
+```javascript
 SqlStatement_EDIT
  : AnyCursor
  | CommonTableExpression 'CURSOR'
@@ -447,13 +447,13 @@ SelectStatement_EDIT
    | 'DISTINCT'
    ;
 
-```
+```javascript
 
 SelectStatement_EDIT  已经可以推导为  'SELECT' TableExpression_EDIT
 
 我们接下来看  TableExpression_EDIT  的推导
 
-```
+```javascript
 TableExpression_EDIT
  : FromClause_EDIT OptionalSelectConditions
  | ...
@@ -468,7 +468,7 @@ TableExpression_EDIT
 
 所以就演变成了
 
-```
+```javascript
 SelectStatement_EDIT
 	:'SELECT' FromClause_EDIT
   | ...
@@ -477,7 +477,7 @@ SelectStatement_EDIT
 
 再看下  FromClause
 
-```
+```javascript
 FromClause_EDIT
  : 'FROM' 'CURSOR'
    {
