@@ -32,25 +32,28 @@ startTransition(() => {
 throttle demo：https://codepen.io/yuanfeng/pen/gOvxEPM
 
 存在的问题：
-● 到达指定时间后，更新开始处理，渲染引擎会被长时间阻塞，页面交互会出现卡顿；
-● throttle 的最佳时间不易掌握，是由开发者设置的时间。而这个预设的时间，在不同性能的设备上不一定能带来最佳的体验；
+
+- 到达指定时间后，更新开始处理，渲染引擎会被长时间阻塞，页面交互会出现卡顿；
+- throttle 的最佳时间不易掌握，是由开发者设置的时间。而这个预设的时间，在不同性能的设备上不一定能带来最佳的体验；
 
 debounce demo：https://codepen.io/yuanfeng/pen/RwQZdbN
 
 存在的问题：
-● 会出现用户输入长时间得不到响应的情况，如上例中虽然输入框中内容一直在变但下面区域内一直不变；
-● 更新操作正式开始以后，渲染引擎仍然会被长时间阻塞，依旧会存在页面卡死的情况；
+
+- 会出现用户输入长时间得不到响应的情况，如上例中虽然输入框中内容一直在变但下面区域内一直不变；
+- 更新操作正式开始以后，渲染引擎仍然会被长时间阻塞，依旧会存在页面卡死的情况；
 
 useTransition demo：https://codepen.io/yuanfeng/pen/gOvxjPw
 
 用 transition 机制的效果：
-● 用户可以及时看到输入内容，交互也较流畅；
-● 用户连续输入时，不会一直得不到响应(最迟 5s 必会开始更新渲染列表)；
-● 开始更新渲染后，协调过程是可中断的，不会长时间阻塞渲染引擎（进入浏览器渲染阶段依然会卡住）；
+- 用户可以及时看到输入内容，交互也较流畅；
+- 用户连续输入时，不会一直得不到响应(最迟 5s 必会开始更新渲染列表)；
+- 开始更新渲染后，协调过程是可中断的，不会长时间阻塞渲染引擎（进入浏览器渲染阶段依然会卡住）；
 
 transition 相比前两种方案的优势：
-● 更新协调过程是可中断的，渲染引擎不会长时间被阻塞，用户可以及时得到响应；
-● 不需要开发人员去做额外的考虑，整个优化过程交给 react 和浏览器即可；
+
+- 更新协调过程是可中断的，渲染引擎不会长时间被阻塞，用户可以及时得到响应；
+- 不需要开发人员去做额外的考虑，整个优化过程交给 react 和浏览器即可；
 
 # transition 实现原理
 
@@ -151,8 +154,9 @@ Concurrent mode：
 ![Concurrent mode](./imgs/concurrent-mode.jpeg)
 
 Concurrent mode 的意义在于：
-● 协调不会长时间阻塞浏览器渲染；
-● 高优先级更新可以中断低优先级更新，优先渲染；
+
+- 协调不会长时间阻塞浏览器渲染；
+- 高优先级更新可以中断低优先级更新，优先渲染；
 
 react 的调度机制是 workLoop 机制。伪代码实现如下：
 
@@ -227,11 +231,12 @@ export const IdleEventPriority: EventPriority = IdleLane;
 ```
 
 react 在内部定义了 5 种类型的调度（Scheduler）优先级：
-● ImmediatePriority, 直接优先级，对应用户的 click、input、focus 等操作；
-● UserBlockingPriority，用户阻塞优先级，对应用户的 mouseMove、scroll 等操作；
-● NormalPriority，普通优先级，对应网络请求、useTransition 等操作；
-● LowPriority，低优先级(未找到应用场景)；
-● IdlePriority，空闲优先级，如 OffScreen;
+
+- ImmediatePriority, 直接优先级，对应用户的 click、input、focus 等操作；
+- UserBlockingPriority，用户阻塞优先级，对应用户的 mouseMove、scroll 等操作；
+- NormalPriority，普通优先级，对应网络请求、useTransition 等操作；
+- LowPriority，低优先级(未找到应用场景)；
+- IdlePriority，空闲优先级，如 OffScreen;
 
 5 种优先级的顺序为: ImmediatePriority > UserBlockingPriority > NormalPriority > LowPriority > IdlePriority。
 
