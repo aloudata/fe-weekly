@@ -457,7 +457,7 @@ const handlePopState = (event)=>{
 
 # **4. react-router  核心 API**
 
-![https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/QoJGq7PjMYkrOAKe/img/8b2476cf-25d2-4dad-8f76-6a4e420b542f.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/QoJGq7PjMYkrOAKe/img/8b2476cf-25d2-4dad-8f76-6a4e420b542f.png)
+![https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/QoJGq7PjMYkrOAKe/img/8b2476cf-25d2-4dad-8f76-6a4e420b542f.png](./imgs/historyLib.png)
 
 ## **4.1 Router -  用来接受 location 变化，派发更新**
 

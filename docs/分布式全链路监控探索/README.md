@@ -255,11 +255,6 @@ skywalking  部署需要的相关服务：
 
 构建错误场景，进行覆盖测试；
 
-里程碑：
-
-1. 在测试环境、demo 环境能看到数据，并且能够应用到实际场景；
-2. 测试一下无法复现的 bug
-
 参考文档：
 
 [https://wu-sheng.gitbooks.io/opentracing-io/content/pages/spec.html](https://wu-sheng.gitbooks.io/opentracing-io/content/pages/spec.html) opentracing  文档中文版
