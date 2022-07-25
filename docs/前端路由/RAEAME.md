@@ -88,15 +88,14 @@ hash 指的是 url 后面的#号后面的字符，如[http://devdws.aloudata.wor
 
 **核心 API**：
 
-- window.location.hash = 'new hash' //  用于设置 hash 值
-- let hash = window.location.hash //  获取当前 hash 值
+- window.location.hash = 'new hash'; // 用于设置 hash 值
+- let hash = window.location.hash  // 获取当前 hash 值
 - window.addEventListener('hashchange', function(event) {
-
-let newURL = event.newURL;
-
-let oldURL = event.oldURL
-
-}, false)
+  let newURL = event.newURL;
+  let oldURL = event.oldURL
+  },
+  false
+  )
 
 代码如下:
 
@@ -157,15 +156,15 @@ class HashRouter {
 
 在 HTML5 之前，浏览器已经有了 history 对象，但在早期的 history 中只能用于**多页面**的跳转:
 
-- history.go(-1); //  后退一页
-- history.forward(); //  前进一页
-- history.back(); //  后退一页
+- history.go(-1); // 后退一页
+- history.forward();  //  前进一页
+- history.back();  // 后退一页
 
 HTML5 版本出现之后，针对 history 新增了一下几个 API：
 
-- history.pushState(); //  添加新的状态到历史状态栈
-- history.replaceState(); //  用新的状态代替当前状态
-- history.state; //  返回当前状态对象
+- history.pushState();  //  添加新的状态到历史状态栈
+- history.replaceState();  //  用新的状态代替当前状态
+- history.state;  //  返回当前状态对象
 
 因为 pushState 和 replaceState 都能在改变 url 的同时不会刷新页面，所以在 HTML5 中的 history 具备了实现前端路由的能力。
 
@@ -243,10 +242,10 @@ class HistoryRouter {
 
 总结:
 
-| 模式         | 主动触发组件更新的方法                                                     | 浏览器操作                                             | 组件更新手段                                                                      |
-| ------------ | -------------------------------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| history 模式 | history.pushState(); history.replaceState()                                | window.addEventListener('popstate', () => {}, false)   | 1. 首先注册对应路由的回调函数； 2. 在浏览器操作和页面主触发时，都主动调用回调函数 |
-| hash 模式    | window.location.hash = '';window.location.replace('www.baidu.com/#/hello') | window.addEventListener('hashchange', () => {}, false) | 1. 首先注册对应路由的回调函数; 2. 仅在 hashchange 的监听事件中调用回调函数        |
+| 模式         | 主动触发组件更新的方法                                                      | 浏览器操作                                             | 组件更新手段                                                                     |
+| ------------ | --------------------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| history 模式 | history.pushState(); history.replaceState();                                | window.addEventListener('popstate', () => {}, false)   | 1. 首先注册对应路由的回调函数；2. 在浏览器操作和页面主触发时，都主动调用回调函数 |
+| hash 模式    | window.location.hash = ''; window.location.replace('www.baidu.com/#/hello') | window.addEventListener('hashchange', () => {}, false) | 1. 首先注册对应路由的回调函数; 2. 仅在 hashchange 的监听事件中调用回调函数       |
 
 # **3. History 库**
 
@@ -372,7 +371,7 @@ const setState = (nextState) => {
 }
 ```
 
-1. listen
+2. listen
 
 - 添加自定义监听事件
 - 添加成功之后，返回一个方法，可供用户自行销毁
