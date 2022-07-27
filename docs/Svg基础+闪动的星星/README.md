@@ -1,4 +1,120 @@
-### **闪动的星星**
+## **闪动的星星**
+
+![星星录屏](./gif/star.gif)
+
+## **基本属性**
+
+- viewPort（视窗）width,height 控制，好比是浏览器的显示屏幕
+- viewBox(视野)用于控制用户观看 svg 的大小，好比是截图工具的那个框，最终呈现的就是把截图内容全屏显示到 svg 上，因为就会有比例关系 -`preserveAspectRatio="xMidYMid meet"`（视野和视窗的关系）
+  - 第 1 个值表示，viewBox 如何与 viewport 对齐；第 2 个值表示，如何维持高宽比（若有）
+
+| 值   | 含义                                 |
+| ---- | :----------------------------------- |
+| xMin | viewport 和 viewBox 左边对齐         |
+| xMid | viewport 和 viewBox x 轴中心对齐     |
+| xMax | viewport 和 viewBox 右边对齐         |
+| YMin | viewport 和 viewBox 上边缘对齐       |
+| YMid | viewport 和 viewBox y 轴中心点对齐。 |
+| YMax | viewport 和 viewBox 下边缘对齐。     |
+
+| 值    | 含义                                            |
+| ----- | :---------------------------------------------- |
+| meet  | 保持纵横比缩放 viewBox 适应 viewport            |
+| slice | 保持纵横比同时比例小的方向需要放大填满 viewport |
+| none  | 扭曲纵横比以充分适应 viewport                   |
+
+ps:通常设置都是`preserveAspectRatio="xMidYMid meet"`
+
+## **基础图形**
+
+- 矩形  <rect />
+  - x ：矩形左上角 x 位置,  默认值为  0
+  - y：矩形左上角 y 位置,  默认值为  0width  矩形的宽度,  不能为负值否则报错, 0  值不绘制
+  - width
+  - height：矩形的高度,  不能为负值否则报错, 0  值不绘制
+  - rx：圆角 x 方向半径,  不能为负值否则报错
+  - ry：圆角 y 方向半径,  不能为负值否则报错
+- 圆形  <circle />
+  - r：半径
+  - cx：圆心 x 位置,  默认为  0
+  - cy：圆心 y 位置,  默认为  0
+- 椭圆  <ellipse />
+  - rx：椭圆 x 半径
+  - ry：椭圆 y 半径
+  - cx：圆心 x 位置,  默认为  0
+  - cy：圆心 y 位置,  默认为  0
+- 直线  <line />
+  - x1：起点的 x 位置
+  - y1：起点的 y 位置
+  - x2：终点的 x 位置
+  - y2：终点的 y 位置
+- 折线  <polyline />
+  - 是点集数列，每个点包含两个数字，数字可以用空格，逗号隔开，一组数字，一个代表横坐标，一个代表纵坐标
+
+```HTML
+<polyline points="10 30, 15 40, 20 40, 30 70, 50 80, 90 110, 110 140, 95 150, 100 145"/>
+```
+
+- 多边形  <polygon />
+  - 和上面一样
+
+```HTML
+<polygon points="50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180"/>
+```
+
+```HTML
+<svg width="400" height="600" viewBox="0 0 200 200" preserveAspectRatio="xMinYMin slice" style="border:1px solid #cd0000;">
+        <rect x="10" y="10" width="150" height="150" fill="green"/>
+    </svg>
+```
+
+## **文档结构**
+
+### 样式处理
+
+- 内联样式
+
+```HTML
+<circle cx="50" cy="40" r="12" style="stroke: red; stroke-width: 3px; fill; #ccccff;"/>
+```
+
+- 内部样式表
+  - <![CDATA[ 样式内容 ]]>这样的目的是为了告诉XML解析器这只是一段字符串，不是XML结构，不用解析
+
+```HTML
+<style type="text/css"><![CDATA[
+ circle {
+ stroke: red; stroke-width: 3px;
+ fill: #ccccff;
+ }
+ rect { fill: gray; stroke: black; }
+]]></style>
+```
+
+- 外部样式表
+  - 外部样式和普通 css 一样，只需要在每个 svg 文件引入<?xml-stylesheet href="svg.css" type="text/css"?>即可使用
+
+```HTML
+// svg.css
+circle.special {
+ stroke: red; stroke-width: 3px;
+ fill: #ccccff;
+}
+<circle cx="40" cy="40" r="20"/>
+<circle cx="60" cy="20" r="10" class="special"/>
+```
+
+### 分组和引用对象
+
+`<g>`元素可以将所有的子元素作为一个组合，并且在此标签上写的所有属性会被子元素继承
+
+`<use>`元素可以把复杂的元素，通过 use 的方式以此绘制，多次引用
+
+`<defs>`元素可以在 svg 中只定义某些内容，但不显示它，但是可以被引用显示
+
+`<image>`可以在 svg 中使用图片
+
+## 星星源码
 
 ```jsx
 import { useEffect, useRef } from 'react';
@@ -181,117 +297,3 @@ const MoonSvg = () => {
 
 export default MoonSvg;
 ```
-
-### **基本属性**
-
-- viewPort（视窗）width,height 控制，好比是浏览器的显示屏幕
-- viewBox(视野)用于控制用户观看 svg 的大小，好比是截图工具的那个框，最终呈现的就是把截图内容全屏显示到 svg 上，因为就会有比例关系 -`preserveAspectRatio="xMidYMid meet"`（视野和视窗的关系）
-  - 第 1 个值表示，viewBox 如何与 viewport 对齐；第 2 个值表示，如何维持高宽比（若有）
-
-| 值   | 含义                                 |
-| ---- | :----------------------------------- |
-| xMin | viewport 和 viewBox 左边对齐         |
-| xMid | viewport 和 viewBox x 轴中心对齐     |
-| xMax | viewport 和 viewBox 右边对齐         |
-| YMin | viewport 和 viewBox 上边缘对齐       |
-| YMid | viewport 和 viewBox y 轴中心点对齐。 |
-| YMax | viewport 和 viewBox 下边缘对齐。     |
-
-| 值    | 含义                                            |
-| ----- | :---------------------------------------------- |
-| meet  | 保持纵横比缩放 viewBox 适应 viewport            |
-| slice | 保持纵横比同时比例小的方向需要放大填满 viewport |
-| none  | 扭曲纵横比以充分适应 viewport                   |
-
-ps:通常设置都是`preserveAspectRatio="xMidYMid meet"`
-
-### **基础图形**
-
-- 矩形  <rect />
-  - x ：矩形左上角 x 位置,  默认值为  0
-  - y：矩形左上角 y 位置,  默认值为  0width  矩形的宽度,  不能为负值否则报错, 0  值不绘制
-  - width
-  - height：矩形的高度,  不能为负值否则报错, 0  值不绘制
-  - rx：圆角 x 方向半径,  不能为负值否则报错
-  - ry：圆角 y 方向半径,  不能为负值否则报错
-- 圆形  <circle />
-  - r：半径
-  - cx：圆心 x 位置,  默认为  0
-  - cy：圆心 y 位置,  默认为  0
-- 椭圆  <ellipse />
-  - rx：椭圆 x 半径
-  - ry：椭圆 y 半径
-  - cx：圆心 x 位置,  默认为  0
-  - cy：圆心 y 位置,  默认为  0
-- 直线  <line />
-  - x1：起点的 x 位置
-  - y1：起点的 y 位置
-  - x2：终点的 x 位置
-  - y2：终点的 y 位置
-- 折线  <polyline />
-  - 是点集数列，每个点包含两个数字，数字可以用空格，逗号隔开，一组数字，一个代表横坐标，一个代表纵坐标
-
-```HTML
-<polyline points="10 30, 15 40, 20 40, 30 70, 50 80, 90 110, 110 140, 95 150, 100 145"/>
-```
-
-- 多边形  <polygon />
-  - 和上面一样
-
-```HTML
-<polygon points="50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180"/>
-```
-
-```HTML
-<svg width="400" height="600" viewBox="0 0 200 200" preserveAspectRatio="xMinYMin slice" style="border:1px solid #cd0000;">
-        <rect x="10" y="10" width="150" height="150" fill="green"/>
-    </svg>
-```
-
-### **文档结构**
-
-#### 样式处理
-
-- 内联样式
-
-```HTML
-<circle cx="50" cy="40" r="12" style="stroke: red; stroke-width: 3px; fill; #ccccff;"/>
-```
-
-- 内部样式表
-  - <![CDATA[ 样式内容 ]]>这样的目的是为了告诉XML解析器这只是一段字符串，不是XML结构，不用解析
-
-```HTML
-<style type="text/css"><![CDATA[
- circle {
- stroke: red; stroke-width: 3px;
- fill: #ccccff;
- }
- rect { fill: gray; stroke: black; }
-]]></style>
-```
-
-- 外部样式表
-  - 外部样式和普通 css 一样，只需要在每个 svg 文件引入<?xml-stylesheet href="svg.css" type="text/css"?>即可使用
-
-```HTML
-// svg.css
-circle.special {
- stroke: red; stroke-width: 3px;
- fill: #ccccff;
-}
-<circle cx="40" cy="40" r="20"/>
-<circle cx="60" cy="20" r="10" class="special"/>
-```
-
-#### 分组和引用对象
-
-`<g>`元素可以将所有的子元素作为一个组合，并且在此标签上写的所有属性会被子元素继承
-
-`<use>`元素可以把复杂的元素，通过 use 的方式以此绘制，多次引用
-
-`<defs>`元素可以在 svg 中只定义某些内容，但不显示它，但是可以被引用显示
-
-`<image>`可以在 svg 中使用图片
-
-ps：后续将对 Path 进行分享
